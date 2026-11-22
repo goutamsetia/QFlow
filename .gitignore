@@ -1,0 +1,14 @@
+
+# Maven generated files
+target/
+
+# Java compiled files
+*.class
+
+# IDE files
+.idea/
+.DS_Store
+
+# Environment and log files
+.env
+*.log
