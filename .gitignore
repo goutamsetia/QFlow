@@ -12,3 +12,6 @@ target/
 # Environment and log files
 .env
 *.log
+# Local CSV data - do not upload
+customers.csv
+qflow_tokens.csv
