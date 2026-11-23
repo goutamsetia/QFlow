@@ -11,8 +11,6 @@ public class AdminMenu {
 
         while (true) {
 
-            boolean exists = dao.adminExists();
-
             System.out.println("\n");
             System.out.println("************************************************");
             System.out.println("*                                              *");
@@ -27,14 +25,7 @@ public class AdminMenu {
             System.out.println("================================================");
 
             System.out.println("\n       Welcome to QFlow Administration");
-
-            if (!exists) {
-                System.out.println("       Initial setup: Create your admin account.");
-                System.out.println("\n       [1] Register Admin");
-            } else {
-                System.out.println("       Please login to continue.");
-            }
-
+            System.out.println("       [1] Register New Admin");
             System.out.println("       [2] Admin Login");
             System.out.println("       [0] Exit Application");
             System.out.println("------------------------------------------------");
@@ -47,11 +38,6 @@ public class AdminMenu {
             switch (choice) {
 
                 case 1:
-                    if (exists) {
-                        System.out.println("\nRegistration is disabled!");
-                        break;
-                    }
-
                     System.out.println("\n========== ADMIN REGISTRATION ==========");
 
                     System.out.print("Enter Full Name: ");
