@@ -1,4 +1,3 @@
-
 package com.qflow.reports;
 
 import java.util.Scanner;
@@ -19,6 +18,7 @@ public class ReportsMenu {
             System.out.println("4. Average Service Time Report");
             System.out.println("5. Priority-wise Token Report");
             System.out.println("6. Counter Performance Report");
+            System.out.println("7. Generate  All Reports");
             System.out.println("0. Back to Main Menu");
 
             System.out.print("Enter your choice: ");
@@ -44,8 +44,13 @@ public class ReportsMenu {
                     dao.getPriorityWiseReport();
                     break;
                     case 6:
-    dao.getCounterPerformanceReport();
-    break;
+                        dao.getCounterPerformanceReport();
+                        break;
+                    
+                    case 7:
+                        dao.generateAllReportsParallel();
+                        break;
+
                 case 0:
                     System.out.println("Returning to Main Menu...");
                     break;

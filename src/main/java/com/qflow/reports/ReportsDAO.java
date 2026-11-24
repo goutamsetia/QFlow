@@ -1,17 +1,17 @@
-
 package com.qflow.reports;
 
 import com.qflow.database.DatabaseConfig;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class ReportsDAO {
 
@@ -303,5 +303,52 @@ public class ReportsDAO {
                     + e.getMessage());
         }
     }
+
+    // 7. GENERATE REPORTS USING MULTITHREADING
+    public void generateAllReportsParallel() {
+
+        System.out.println("\n========== GENERATING ALL REPORTS  ==========");
+
+        // Create a thread pool containing 3 threads
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        try {
+
+            // Thread 1: Generate Token Summary Report
+            Future<?> report1 = executor.submit(() -> {
+                System.out.println("\n[Thread 1] Generating Token Summary...");
+                getTokenSummary();
+            });
+
+            // Thread 2: Generate Service-wise Report
+            Future<?> report2 = executor.submit(() -> {
+                System.out.println("\n[Thread 2] Generating Service-wise Report...");
+                getServiceWiseReport();
+            });
+
+            // Thread 3: Generate Counter Performance Report
+            Future<?> report3 = executor.submit(() -> {
+                System.out.println("\n[Thread 3] Generating Counter Performance...");
+                getCounterPerformanceReport();
+            });
+
+            // Wait for all three reports to finish
+            report1.get();
+            report2.get();
+            report3.get();
+
+            System.out.println("\nAll reports generated successfully!");
+
+        } catch (Exception e) {
+
+            System.out.println("Error generating reports: " + e.getMessage());
+
+        } finally {
+
+            // Shut down the thread pool
+            executor.shutdown();
+        }
+    }
+
 
 }

@@ -1,6 +1,4 @@
-
 package com.qflow.streams;
-
 import java.util.*;
 
 public class StreamDemo {
