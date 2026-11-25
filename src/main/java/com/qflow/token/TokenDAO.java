@@ -481,7 +481,4 @@ try (PreparedStatement pst = con.prepareStatement(waitSql)) {
             System.out.println("Error exporting tokens: " + e.getMessage());
         }
     }
-
-
-
 }

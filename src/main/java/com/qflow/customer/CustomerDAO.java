@@ -269,7 +269,7 @@ new FileReader(filePath)
                 } catch (SQLException e) {
 
                     // Duplicate phone number
-                    if (e.getErrorCode() == 1062) {
+                    if (e.getErrorCode() == 1062) {//1062->means any duplicate entry
                         skipped++;
                     } else {
                         throw e;
@@ -286,7 +286,4 @@ new FileReader(filePath)
             System.out.println("Error importing customers: " + e.getMessage());
         }
     }
-
-
-
 }
