@@ -49,7 +49,7 @@ MySQL Connector/J 9.5.0	MySQL JDBC driver
 Java Enums	Priority levels, token statuses, service categories, and user roles
 Java Streams	Stream demonstration
 
-
+```text
 QFlow/
 ├── pom.xml
 ├── sql/
@@ -93,6 +93,7 @@ QFlow/
                 └── token/
                     ├── TokenDAO.java
                     └── TokenMenu.java
+```
 Database design
 The SQL schema creates six main tables:
 Table	Purpose
