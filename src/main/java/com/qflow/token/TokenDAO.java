@@ -2,7 +2,7 @@
 package com.qflow.token;
 
 import com.qflow.database.DatabaseConfig;
-
+import com.qflow.enums.TokenStatus;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -327,6 +327,20 @@ try (PreparedStatement pst = con.prepareStatement(waitSql)) {
 
     // 5. UPDATE TOKEN STATUS
     public boolean updateTokenStatus(int tokenId, String status) {
+                // Validate token status before updating the database
+        if (status == null) {
+            System.out.println("\nInvalid token status!");
+            System.out.println("Allowed statuses: WAITING, SERVING, COMPLETED, CANCELLED");
+            return false;
+        }
+
+        try {
+            TokenStatus.valueOf(status.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("\nInvalid token status!");
+            System.out.println("Allowed statuses: WAITING, SERVING, COMPLETED, CANCELLED");
+            return false;
+        }
 
         String sql =
         "UPDATE Token SET status = ?, "
