@@ -1,19 +1,17 @@
 package com.qflow.reports;
 
-//Imports  database connection constants (URL, USERNAME, PASSWORD).
 import com.qflow.database.DatabaseConfig;
-
-//Loads JDBC interfaces and classes for executing SQL queries and handling SQL errors
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-//Loads collection types and sorting utilities for processing query rows in Java.
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class ReportsDAO {
 
@@ -313,53 +311,50 @@ public class ReportsDAO {
     }
 
     // 7. GENERATE REPORTS USING MULTITHREADING
-   public void generateAllReportsParallel() {
+    public void generateAllReportsParallel() {
 
-    System.out.println("\n========== GENERATING ALL REPORTS ==========");
+        System.out.println("\n========== GENERATING ALL REPORTS  ==========");
 
-    Thread report1 = new Thread(new Runnable() {
+        // Create a thread pool containing 3 threads
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        @Override
-        public void run() {
-            System.out.println("\n[Thread 1] Generating Token Summary...");
-            getTokenSummary();
+        try {
+
+            // Thread 1: Generate Token Summary Report
+            Future<?> report1 = executor.submit(() -> {
+                System.out.println("\n[Thread 1] Generating Token Summary...");
+                getTokenSummary();
+            });
+
+            // Thread 2: Generate Service-wise Report
+            Future<?> report2 = executor.submit(() -> {
+                System.out.println("\n[Thread 2] Generating Service-wise Report...");
+                getServiceWiseReport();
+            });
+
+            // Thread 3: Generate Counter Performance Report
+            Future<?> report3 = executor.submit(() -> {
+                System.out.println("\n[Thread 3] Generating Counter Performance...");
+                getCounterPerformanceReport();
+            });
+
+            // Wait for all three reports to finish
+            report1.get();
+            report2.get();
+            report3.get();
+
+            System.out.println("\nAll reports generated successfully!");
+
+        } catch (Exception e) {
+
+            System.out.println("Error generating reports: " + e.getMessage());
+
+        } finally {
+
+            // Shut down the thread pool
+            executor.shutdown();
         }
-    });
-
-    Thread report2 = new Thread(new Runnable() {
-
-        @Override
-        public void run() {
-            System.out.println("\n[Thread 2] Generating Service-wise Report...");
-            getServiceWiseReport();
-        }
-    });
-
-    Thread report3 = new Thread(new Runnable() {
-
-        @Override
-        public void run() {
-            System.out.println("\n[Thread 3] Generating Counter Performance...");
-            getCounterPerformanceReport();
-        }
-    });
-
-    // Start all reports at the same time
-    report1.start();
-    report2.start();
-    report3.start();
-
-    try {
-        // Wait for all report threads to finish
-        report1.join();
-        report2.join();
-        report3.join();
-
-        System.out.println("\nAll reports generated successfully!");
-
-    } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-        System.out.println("Report generation was interrupted.");
     }
-}
+
+
 }
