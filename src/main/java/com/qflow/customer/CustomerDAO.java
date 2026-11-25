@@ -240,7 +240,14 @@ new FileReader(filePath)
                 String phone = data[1].trim();
                 String email = data[2].trim();
 
-                if (name.isEmpty() || phone.isEmpty()) {
+                // Validate customer details before database insertion
+                if (name.isEmpty() || name.length() > 100
+                        || phone.isEmpty()
+                        || !phone.matches("\\d{10,15}")
+                        || (!email.isEmpty() &&
+                            (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+                            || email.length() > 100))) {
+
                     skipped++;
                     continue;
                 }
