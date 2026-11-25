@@ -78,9 +78,11 @@ public class ReportsDAO {
             System.out.println("\n========== SERVICE-WISE TOKEN REPORT ==========");
 
             List<String> serviceRecords = new ArrayList<>();
-
+            boolean hasRecords = false;
             while (rs.next()) {
-
+                if (rs.getInt("total_tokens") > 0) {
+                    hasRecords = true;
+                }
                 String record =
                         rs.getString("service_name") + " | "
                       + rs.getInt("total_tokens") + " | "
@@ -91,7 +93,11 @@ public class ReportsDAO {
 
                 serviceRecords.add(record);
             }
-
+            if (!hasRecords) {
+                System.out.println("No service records with tokens found.");
+                System.out.println("================================================");
+                return;
+            }
             serviceRecords.stream()
 
                     // filter(): Keep services having at least one token
