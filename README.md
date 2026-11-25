@@ -50,7 +50,6 @@ Java Enums	Priority levels, token statuses, service categories, and user roles
 Java Streams	Stream demonstration
 
 
-Project structure
 QFlow/
 ├── pom.xml
 ├── sql/
