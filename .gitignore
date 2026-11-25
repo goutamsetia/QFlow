@@ -1,19 +1,17 @@
-# Maven build targets
+
+# Maven generated files
 target/
+
+# Java compiled files
 *.class
 
-# IDE and Editor configurations
+# IDE files
 .idea/
-*.iml
-.vscode/
-*.ipr
-*.iws
-
-# OS-generated files
 .DS_Store
-Thumbs.db
 
-# Database credentials & local properties
-db.properties
-application.properties
+# Environment and log files
+.env
 *.log
+# Local CSV data - do not upload
+customers.csv
+qflow_tokens.csv
