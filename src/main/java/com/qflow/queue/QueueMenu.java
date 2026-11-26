@@ -19,8 +19,8 @@ public class QueueMenu {
             System.out.println("0. Back to Main Menu");
             System.out.print("Enter your choice: ");
 
-            choice = sc.nextInt();
-            sc.nextLine();
+            choice = readInt(sc);
+           
 
             switch (choice) {
 
@@ -33,8 +33,7 @@ public class QueueMenu {
                     break;
                 case 2:
                     System.out.print("Enter Counter ID: ");
-                    int counterId = sc.nextInt();
-                    sc.nextLine();
+                    int counterId = readInt(sc);
 
                     dao.callNextToken(counterId);
                     break;
@@ -43,8 +42,7 @@ public class QueueMenu {
                     break;
                 case 4:
                     System.out.print("Enter Token ID to complete service: ");
-                    int tokenId = sc.nextInt();
-                    sc.nextLine();
+                    int tokenId = readInt(sc);
 
                     dao.completeService(tokenId);
                     break;
@@ -54,5 +52,14 @@ public class QueueMenu {
             }
 
         } while (choice != 0);
+    }
+        private int readInt(Scanner sc) {
+        while (true) {
+            try {
+                return Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Please enter a number: ");
+            }
+        }
     }
 }
